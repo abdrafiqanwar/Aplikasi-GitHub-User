@@ -1,5 +1,6 @@
 package com.example.submissionawal.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,7 @@ import com.example.submissionawal.data.response.ItemsItem
 import com.example.submissionawal.databinding.ItemUserBinding
 
 class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK){
+
     class ViewHolder(val binding: ItemUserBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,6 +25,11 @@ class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK
         holder.binding.tvUserUrl.text = user.htmlUrl
         Glide.with(holder.itemView.context).load(user.avatarUrl)
             .into(holder.binding.ivPhoto)
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            intent.putExtra("username", user.login)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     companion object {

@@ -3,4 +3,11 @@
     <string name="username">Username</string>
     <string name="user_url">User URL</string>
     <string name="searchbar_hint">Kepo kamu ya</string>
+    <string name="name">Name</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="repo">Repositories</string>
+    <string name="following_number">100</string>
+    <string name="followers_number">100</string>
+    <string name="repo_number">100</string>
 </resources>
