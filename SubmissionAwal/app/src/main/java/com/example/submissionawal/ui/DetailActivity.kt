@@ -1,7 +1,7 @@
 package com.example.submissionawal.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.service.controls.ControlsProviderService
 import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -51,12 +51,12 @@ class DetailActivity : AppCompatActivity() {
                         setDetailUser(responseBody)
                     }
                 } else {
-                    Log.e(ControlsProviderService.TAG, "onFailure: ${response.message()}")
+                    Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
                 showLoading(false)
-                Log.e(ControlsProviderService.TAG, "onFailure: ${t.message}")
+                Log.e(TAG, "onFailure: ${t.message}")
             }
         })
     }

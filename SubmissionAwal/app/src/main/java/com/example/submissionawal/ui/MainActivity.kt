@@ -1,13 +1,14 @@
 package com.example.submissionawal.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.service.controls.ControlsProviderService
 import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.size
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissionawal.R
@@ -65,12 +66,12 @@ class MainActivity : AppCompatActivity() {
                         setUserData(responseBody.items)
                     }
                 } else {
-                    Log.e(ControlsProviderService.TAG, "onFailure: ${response.message()}")
+                    Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<GithubResponse>, t: Throwable) {
                 showLoading(false)
-                Log.e(ControlsProviderService.TAG, "onFailure: ${t.message}")
+                Log.e(TAG, "onFailure: ${t.message}")
             }
         })
     }
@@ -79,6 +80,11 @@ class MainActivity : AppCompatActivity() {
         val adapter = UserAdapter()
         adapter.submitList(user)
         binding.rvUser.adapter = adapter
+        if (user.size > 0){
+            binding.tvNoData.visibility = View.GONE
+        }else{
+            binding.tvNoData.visibility = View.VISIBLE
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

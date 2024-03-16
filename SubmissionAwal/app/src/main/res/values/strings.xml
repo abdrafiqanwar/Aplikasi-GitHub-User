@@ -10,4 +10,5 @@
     <string name="following_number">100</string>
     <string name="followers_number">100</string>
     <string name="repo_number">100</string>
+    <string name="no_data">Tidak ada data</string>
 </resources>
