@@ -22,10 +22,11 @@
         android:layout_gravity="center"/>
 
     <TextView
-        android:id="@+id/tv_testing"
+        android:id="@+id/tv_no_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="halo"
-        android:layout_gravity="center"/>
+        android:text="@string/no_data"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
 
 </FrameLayout>
