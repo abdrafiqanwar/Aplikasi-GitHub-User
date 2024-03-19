@@ -1,26 +1,20 @@
 package com.example.submissionawal.ui
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.submissionawal.data.response.GithubResponse
 import com.example.submissionawal.data.response.ItemsItem
-import com.example.submissionawal.data.retrofit.ApiConfig
 import com.example.submissionawal.databinding.FragmentDetailBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class DetailFragment : Fragment() {
 
-    private lateinit var _binding: FragmentDetailBinding
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentDetailBinding
+    private val fragmentViewModel by viewModels<FragmentViewModel>()
 
     var position: Int = 0
     var username: String = ""
@@ -33,15 +27,30 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentDetailBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fragmentViewModel.listFollowers.observe(requireActivity()){
+            if (it != null) {
+                setUserData(it)
+            }
+        }
+
+        fragmentViewModel.listFollowing.observe(requireActivity()){
+            if (it != null) {
+                setUserData(it)
+            }
+        }
+
+        fragmentViewModel.isLoading.observe(requireActivity()){
+            showLoading(it)
+        }
 
         arguments?.let {
             position = it.getInt(ARG_POSITION)
@@ -49,65 +58,15 @@ class DetailFragment : Fragment() {
         }
 
         if (position == 1){
-            getFollowers(username)
+            fragmentViewModel.getFollowers(username)
         } else {
-            getFollowing(username)
+            fragmentViewModel.getFollowing(username)
         }
 
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvUser.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
-    }
-
-    private fun getFollowers(username: String){
-        showLoading(true)
-        val client = ApiConfig.getApiService().getFollowers(username)
-        client.enqueue(object : Callback<List<ItemsItem>> {
-            override fun onResponse(
-                call: Call<List<ItemsItem>>,
-                response: Response<List<ItemsItem>>
-            ) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        setUserData(responseBody)
-                    }
-                } else {
-                    Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
-                }
-            }
-            override fun onFailure(call: Call<List<ItemsItem>>, t: Throwable) {
-                showLoading(false)
-                Log.e(ContentValues.TAG, "onFailure: ${t.message}")
-            }
-        })
-    }
-
-    private fun getFollowing(username: String){
-        showLoading(true)
-        val client = ApiConfig.getApiService().getFollowing(username)
-        client.enqueue(object : Callback<List<ItemsItem>> {
-            override fun onResponse(
-                call: Call<List<ItemsItem>>,
-                response: Response<List<ItemsItem>>
-            ) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        setUserData(responseBody)
-                    }
-                } else {
-                    Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
-                }
-            }
-            override fun onFailure(call: Call<List<ItemsItem>>, t: Throwable) {
-                showLoading(false)
-                Log.e(ContentValues.TAG, "onFailure: ${t.message}")
-            }
-        })
     }
 
     private fun setUserData(user: List<ItemsItem>) {
