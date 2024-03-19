@@ -56,8 +56,8 @@ class DetailFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvUser.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
-        binding.rvUser.addItemDecoration(itemDecoration)
+//        val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
+//        binding.rvUser.addItemDecoration(itemDecoration)
     }
 
     private fun getFollowers(username: String){
