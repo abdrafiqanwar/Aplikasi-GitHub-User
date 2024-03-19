@@ -1,10 +1,9 @@
 package com.example.submissionawal.ui
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,17 +12,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.submissionawal.R
 import com.example.submissionawal.data.response.DetailUserResponse
-import com.example.submissionawal.data.retrofit.ApiConfig
 import com.example.submissionawal.databinding.ActivityDetailBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
+    private val detailViewModel by viewModels<DetailViewModel>()
 
     companion object {
         @StringRes
@@ -44,8 +40,18 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
+        detailViewModel.listUser.observe(this){
+            if (it != null) {
+                setDetailUser(it)
+            }
+        }
+
+        detailViewModel.isLoading.observe(this){
+            showLoading(it)
+        }
+
         val username = intent.getStringExtra("username")
-        detailUser(username.toString())
+        detailViewModel.detailUser(username.toString())
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this)
         sectionsPagerAdapter.username = username.toString()
@@ -55,31 +61,6 @@ class DetailActivity : AppCompatActivity() {
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
-    }
-
-    private fun detailUser(path: String){
-        showLoading(true)
-        val client = ApiConfig.getApiService().getDetailUser(path)
-        client.enqueue(object : Callback<DetailUserResponse> {
-            override fun onResponse(
-                call: Call<DetailUserResponse>,
-                response: Response<DetailUserResponse>
-            ) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        setDetailUser(responseBody)
-                    }
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
-            }
-            override fun onFailure(call: Call<DetailUserResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
     }
 
     private fun setDetailUser(user: DetailUserResponse){
