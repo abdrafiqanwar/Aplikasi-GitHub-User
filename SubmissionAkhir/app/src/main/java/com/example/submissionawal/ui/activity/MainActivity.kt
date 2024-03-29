@@ -1,5 +1,6 @@
-package com.example.submissionawal.ui
+package com.example.submissionawal.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissionawal.R
 import com.example.submissionawal.data.response.ItemsItem
 import com.example.submissionawal.databinding.ActivityMainBinding
+import com.example.submissionawal.ui.viewmodel.MainViewModel
+import com.example.submissionawal.ui.adapter.UserAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +52,18 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.findUser(searchBar.text.toString())
                 searchView.hide()
                 false
+            }
+        }
+
+        binding.searchBar.inflateMenu(R.menu.menu)
+        binding.searchBar.setOnMenuItemClickListener{
+            when (it.itemId){
+                R.id.setting -> {
+                    val intent = Intent(this, SettingActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.submissionawal.ui
+package com.example.submissionawal.ui.activity
 
 import android.os.Bundle
 import android.view.View
@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.example.submissionawal.R
 import com.example.submissionawal.data.response.DetailUserResponse
 import com.example.submissionawal.databinding.ActivityDetailBinding
+import com.example.submissionawal.ui.viewmodel.DetailViewModel
+import com.example.submissionawal.ui.adapter.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

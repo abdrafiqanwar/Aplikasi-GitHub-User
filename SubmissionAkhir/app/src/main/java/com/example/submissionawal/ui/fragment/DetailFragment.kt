@@ -1,4 +1,4 @@
-package com.example.submissionawal.ui
+package com.example.submissionawal.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissionawal.data.response.ItemsItem
 import com.example.submissionawal.databinding.FragmentDetailBinding
+import com.example.submissionawal.ui.viewmodel.FragmentViewModel
+import com.example.submissionawal.ui.adapter.UserAdapter
 
 class DetailFragment : Fragment() {
 

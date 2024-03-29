@@ -1,4 +1,4 @@
-package com.example.submissionawal.ui
+package com.example.submissionawal.ui.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.submissionawal.data.response.ItemsItem
 import com.example.submissionawal.databinding.ItemUserBinding
+import com.example.submissionawal.ui.activity.DetailActivity
 
 class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK){
 
