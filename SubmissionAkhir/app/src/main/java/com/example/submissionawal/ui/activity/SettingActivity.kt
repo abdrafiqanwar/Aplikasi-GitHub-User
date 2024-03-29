@@ -7,8 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.submissionawal.R
+import com.example.submissionawal.SettingPreferences
+import com.example.submissionawal.dataStore
 import com.example.submissionawal.databinding.ActivitySettingBinding
+import com.example.submissionawal.ui.viewmodel.SettingViewModel
+import com.example.submissionawal.ui.viewmodel.ViewModelFactory
 
 class SettingActivity : AppCompatActivity() {
 
@@ -25,14 +30,22 @@ class SettingActivity : AppCompatActivity() {
             insets
         }
 
-        binding.switchTheme.setOnCheckedChangeListener{ _: CompoundButton?, isChecked: Boolean ->
-            if (isChecked){
+        val pref = SettingPreferences.getInstance(application.dataStore)
+        val settingViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
+            SettingViewModel::class.java
+        )
+        settingViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 binding.switchTheme.isChecked = true
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 binding.switchTheme.isChecked = false
             }
+        }
+
+        binding.switchTheme.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            settingViewModel.saveThemeSetting(isChecked)
         }
     }
 }

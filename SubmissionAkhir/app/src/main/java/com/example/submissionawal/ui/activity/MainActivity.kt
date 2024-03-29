@@ -3,18 +3,25 @@ package com.example.submissionawal.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissionawal.R
+import com.example.submissionawal.SettingPreferences
 import com.example.submissionawal.data.response.ItemsItem
+import com.example.submissionawal.dataStore
 import com.example.submissionawal.databinding.ActivityMainBinding
 import com.example.submissionawal.ui.viewmodel.MainViewModel
 import com.example.submissionawal.ui.adapter.UserAdapter
+import com.example.submissionawal.ui.viewmodel.SettingViewModel
+import com.example.submissionawal.ui.viewmodel.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,6 +71,18 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> false
+            }
+        }
+
+        val pref = SettingPreferences.getInstance(application.dataStore)
+        val settingViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
+            SettingViewModel::class.java
+        )
+        settingViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
     }
