@@ -1,5 +1,6 @@
 package com.example.submissionawal.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -41,11 +42,17 @@ class FavoriteActivity : AppCompatActivity() {
             val adapter = UserAdapter()
             val items = arrayListOf<ItemsItem>()
             users.map {
-                val item = ItemsItem(login = it.username, avatarUrl = it.avatarUrl, htmlUrl = it.htmlUrl)
+                val item = ItemsItem(id = it.id, login = it.username, avatarUrl = it.avatarUrl, htmlUrl = it.htmlUrl)
                 items.add(item)
             }
             adapter.submitList(items)
             binding.rvUser.adapter = adapter
+
+            adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback{
+                override fun onItemClicked(data: ItemsItem) {
+                    showSelectedUser(data)
+                }
+            })
 
             if (items.size > 0 ){
                 binding.tvNoData.visibility = View.GONE
@@ -55,6 +62,15 @@ class FavoriteActivity : AppCompatActivity() {
         }
 
         binding.rvUser.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun showSelectedUser(user: ItemsItem) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("username", user.login)
+        intent.putExtra("avatarUrl", user.avatarUrl)
+        intent.putExtra("id", user.id)
+        intent.putExtra("htmlUrl", user.htmlUrl)
+        startActivity(intent)
     }
 
     private fun showLoading(isLoading: Boolean) {

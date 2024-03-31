@@ -79,10 +79,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showSelectedUser(user: ItemsItem) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("username", user.login)
+        intent.putExtra("avatarUrl", user.avatarUrl)
+        intent.putExtra("id", user.id)
+        intent.putExtra("htmlUrl", user.htmlUrl)
+        startActivity(intent)
+    }
+
     private fun setUserData(user: List<ItemsItem?>?) {
         val adapter = UserAdapter()
         adapter.submitList(user)
         binding.rvUser.adapter = adapter
+        adapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback{
+            override fun onItemClicked(data: ItemsItem) {
+                showSelectedUser(data)
+            }
+        })
         if (user != null) {
             if (user.size > 0){
                 binding.tvNoData.visibility = View.GONE

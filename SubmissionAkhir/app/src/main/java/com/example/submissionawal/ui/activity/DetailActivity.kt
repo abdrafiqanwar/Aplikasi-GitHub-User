@@ -21,6 +21,7 @@ import com.example.submissionawal.ui.adapter.SectionsPagerAdapter
 import com.example.submissionawal.ui.viewmodel.FavoriteViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import okhttp3.internal.notifyAll
 
 class DetailActivity : AppCompatActivity() {
 

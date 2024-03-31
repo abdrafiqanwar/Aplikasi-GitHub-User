@@ -13,6 +13,12 @@ import com.example.submissionawal.ui.activity.DetailActivity
 
 class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK){
 
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     class ViewHolder(val binding: ItemUserBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,14 +32,7 @@ class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK
         holder.binding.tvUserUrl.text = user.htmlUrl
         Glide.with(holder.itemView.context).load(user.avatarUrl)
             .into(holder.binding.ivPhoto)
-        holder.itemView.setOnClickListener{
-            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("username", user.login)
-            intent.putExtra("avatarUrl", user.avatarUrl)
-            intent.putExtra("id", user.id)
-            intent.putExtra("htmlUrl", user.htmlUrl)
-            holder.itemView.context.startActivity(intent)
-        }
+        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(user) }
     }
 
     companion object {
@@ -45,5 +44,9 @@ class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK
                 return oldItem == newItem
             }
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: ItemsItem)
     }
 }
