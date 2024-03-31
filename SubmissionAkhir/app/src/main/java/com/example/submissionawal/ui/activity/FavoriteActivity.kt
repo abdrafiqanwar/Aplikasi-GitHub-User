@@ -42,7 +42,7 @@ class FavoriteActivity : AppCompatActivity() {
             val adapter = UserAdapter()
             val items = arrayListOf<ItemsItem>()
             users.map {
-                val item = ItemsItem(login = it.username, avatarUrl = it.avatarUrl)
+                val item = ItemsItem(login = it.username, avatarUrl = it.avatarUrl, htmlUrl = it.htmlUrl)
                 items.add(item)
             }
             adapter.submitList(items)

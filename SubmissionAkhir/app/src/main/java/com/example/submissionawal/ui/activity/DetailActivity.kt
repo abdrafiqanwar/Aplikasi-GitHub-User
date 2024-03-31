@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.submissionawal.R
 import com.example.submissionawal.data.response.DetailUserResponse
 import com.example.submissionawal.database.FavoriteUser
-import com.example.submissionawal.database.FavoriteUserDao
 import com.example.submissionawal.databinding.ActivityDetailBinding
 import com.example.submissionawal.helper.ViewModelFactory
 import com.example.submissionawal.ui.viewmodel.DetailViewModel
@@ -31,10 +30,8 @@ class DetailActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(application)
     }
     private var favoriteUser: FavoriteUser? = null
-    private var isEdit = false
 
     companion object {
-        const val EXTRA_FAVORITE = "extra_favorite"
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.tab_text_1,
@@ -56,19 +53,17 @@ class DetailActivity : AppCompatActivity() {
         val id = intent.getIntExtra("id", 0)
         val username = intent.getStringExtra("username")
         val avatarUrl = intent.getStringExtra("avatarUrl")
+        val htmlUrl = intent.getStringExtra("htmlUrl")
 
-        favoriteUser = intent.getParcelableExtra(EXTRA_FAVORITE)
-        if (favoriteUser != null){
-            isEdit = true
-        } else{
+        if(favoriteUser == null){
             favoriteUser = FavoriteUser()
         }
-//        favoriteUser = FavoriteUser()
 
         favoriteUser.let {
             it?.id = id
             it?.username = username.toString()
             it?.avatarUrl = avatarUrl.toString()
+            it?.htmlUrl = htmlUrl.toString()
         }
 
         favoriteViewModel.getFavoriteUserByUsername(username.toString()).observe(this){

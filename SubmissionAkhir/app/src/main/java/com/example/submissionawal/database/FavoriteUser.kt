@@ -18,4 +18,7 @@ data class FavoriteUser(
 
     @ColumnInfo(name = "avatarUrl")
     var avatarUrl: String? = null,
+
+    @ColumnInfo(name = "htmlUrl")
+    var htmlUrl: String? = null,
 ) : Parcelable

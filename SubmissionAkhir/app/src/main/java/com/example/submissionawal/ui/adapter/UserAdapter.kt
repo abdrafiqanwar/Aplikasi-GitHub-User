@@ -31,6 +31,7 @@ class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK
             intent.putExtra("username", user.login)
             intent.putExtra("avatarUrl", user.avatarUrl)
             intent.putExtra("id", user.id)
+            intent.putExtra("htmlUrl", user.htmlUrl)
             holder.itemView.context.startActivity(intent)
         }
     }
