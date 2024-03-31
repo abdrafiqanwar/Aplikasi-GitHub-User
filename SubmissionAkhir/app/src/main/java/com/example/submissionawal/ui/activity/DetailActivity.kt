@@ -76,13 +76,13 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        binding.fabFavoriteBorder.setOnClickListener{
-            favoriteViewModel.insert(favoriteUser as FavoriteUser)
-            Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_LONG).show()
-        }
-
         binding.fabFavorite.setOnClickListener{
             favoriteViewModel.delete(favoriteUser as FavoriteUser)
+            Toast.makeText(this, "Berhasil dihapus dari favorite", Toast.LENGTH_LONG).show()
+        }
+
+        binding.fabFavoriteBorder.setOnClickListener{
+            favoriteViewModel.insert(favoriteUser as FavoriteUser)
             Toast.makeText(this, "Berhasil ditambahkan ke favorite", Toast.LENGTH_LONG).show()
         }
 

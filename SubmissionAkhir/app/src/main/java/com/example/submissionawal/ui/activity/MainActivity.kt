@@ -77,18 +77,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        val pref = SettingPreferences.getInstance(application.dataStore)
-        val settingViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
-            SettingViewModel::class.java
-        )
-        settingViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
-            if (isDarkModeActive) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
     }
 
     private fun setUserData(user: List<ItemsItem?>?) {
