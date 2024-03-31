@@ -14,7 +14,6 @@ import com.example.submissionawal.databinding.ActivityFavoriteBinding
 import com.example.submissionawal.helper.ViewModelFactory
 import com.example.submissionawal.ui.adapter.UserAdapter
 import com.example.submissionawal.ui.viewmodel.FavoriteViewModel
-import com.example.submissionawal.ui.viewmodel.MainViewModel
 
 class FavoriteActivity : AppCompatActivity() {
 
