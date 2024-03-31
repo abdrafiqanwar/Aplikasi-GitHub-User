@@ -9,8 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.submissionawal.R
-import com.example.submissionawal.SettingPreferences
-import com.example.submissionawal.dataStore
+import com.example.submissionawal.ui.datastore.SettingPreferences
+import com.example.submissionawal.ui.datastore.dataStore
 import com.example.submissionawal.databinding.ActivitySettingBinding
 import com.example.submissionawal.ui.viewmodel.SettingViewModel
 import com.example.submissionawal.ui.viewmodel.ViewModelFactory

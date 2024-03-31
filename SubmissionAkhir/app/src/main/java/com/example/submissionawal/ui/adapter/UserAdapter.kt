@@ -29,6 +29,8 @@ class UserAdapter : ListAdapter<ItemsItem, UserAdapter.ViewHolder>(DIFF_CALLBACK
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
             intent.putExtra("username", user.login)
+            intent.putExtra("avatarUrl", user.avatarUrl)
+            intent.putExtra("id", user.id)
             holder.itemView.context.startActivity(intent)
         }
     }

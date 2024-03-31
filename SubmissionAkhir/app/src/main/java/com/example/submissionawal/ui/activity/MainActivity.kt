@@ -3,7 +3,6 @@ package com.example.submissionawal.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.submissionawal.R
-import com.example.submissionawal.SettingPreferences
+import com.example.submissionawal.ui.datastore.SettingPreferences
 import com.example.submissionawal.data.response.ItemsItem
-import com.example.submissionawal.dataStore
+import com.example.submissionawal.ui.datastore.dataStore
 import com.example.submissionawal.databinding.ActivityMainBinding
 import com.example.submissionawal.ui.viewmodel.MainViewModel
 import com.example.submissionawal.ui.adapter.UserAdapter
@@ -70,6 +69,11 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.favorite -> {
+                    val intent = Intent(this, FavoriteActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else -> false
             }
         }
@@ -87,14 +91,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUserData(user: List<ItemsItem>) {
+    private fun setUserData(user: List<ItemsItem?>?) {
         val adapter = UserAdapter()
         adapter.submitList(user)
         binding.rvUser.adapter = adapter
-        if (user.size > 0){
-            binding.tvNoData.visibility = View.GONE
-        }else{
-            binding.tvNoData.visibility = View.VISIBLE
+        if (user != null) {
+            if (user.size > 0){
+                binding.tvNoData.visibility = View.GONE
+            }else{
+                binding.tvNoData.visibility = View.VISIBLE
+            }
         }
     }
 

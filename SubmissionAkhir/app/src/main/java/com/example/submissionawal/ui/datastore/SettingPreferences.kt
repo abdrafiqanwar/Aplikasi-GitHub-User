@@ -1,4 +1,4 @@
-package com.example.submissionawal
+package com.example.submissionawal.ui.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

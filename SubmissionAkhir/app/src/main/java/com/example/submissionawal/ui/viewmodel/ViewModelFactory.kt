@@ -2,7 +2,7 @@ package com.example.submissionawal.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.submissionawal.SettingPreferences
+import com.example.submissionawal.ui.datastore.SettingPreferences
 
 class ViewModelFactory(private val pref: SettingPreferences) : ViewModelProvider.NewInstanceFactory() {
 
